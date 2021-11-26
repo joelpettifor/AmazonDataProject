@@ -8,10 +8,16 @@ df = df.drop(['Attributes', 'Device Type', 'Bookmark', 'Latest Bookmark', 'Count
 df['Start Time'] = pd.to_datetime(df['Start Time'], utc=True)
 df['Duration'] = pd.to_timedelta(df['Duration'])
 df['Title'] = df['Title'].str.replace(r":.*", "")
-df['Supplemental Video Type'] = df[(df['Supplemental Video Type'].isna())]
-titles = df.groupby(['Profile Name', 'Title'])
+df = df[(df['Supplemental Video Type'].isna())]
 
-print(df.dtypes)
-print(df.head(5))
-titles_total = titles['Duration'].sum()
-print titles_total
+titles = df.sort_values(['Profile Name'], ascending=True) \
+    .groupby(['Profile Name', 'Title']).sum() \
+    .apply(lambda x: x.sort_values(['Duration'], ascending=True)) \
+    .reset_index(drop=True)
+
+print(titles[['Profile Name','Title','Duration']])
+
+#print(df.head(4))
+#print(titles.loc[:5,['Profile Name','Title','Duration']])
+
+
