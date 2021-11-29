@@ -15,7 +15,7 @@ titles = df.sort_values(['Profile Name'], ascending=True) \
     .apply(lambda x: x.sort_values(['Duration'], ascending=True)) \
     .reset_index(drop=True)
 
-print(titles[['Profile Name','Title','Duration']])
+#print(titles[['Profile Name','Title','Duration']])
 
 #print(df.head(4))
 #print(titles.loc[:5,['Profile Name','Title','Duration']])
